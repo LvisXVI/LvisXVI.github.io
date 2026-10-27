@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de" class="js-off">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08111c">
+  <title>LvisXVI — Minecraft-Tools</title>
+  <meta name="description" content="LvisXVI baut Minecraft-Tools: Minecraft Host für lokale Server, Modspire für Modpacks und Mod Studio für eigene Mods. Kontakt über Discord, E-Mail und GitHub.">
+  <link rel="canonical" href="https://lvisxvi.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lvisxvi.github.io/">
+  <meta property="og:title" content="LvisXVI — Minecraft-Tools">
+  <meta property="og:description" content="Minecraft Host, Modspire und Mod Studio. Lokal auf deinem PC, im Liquid-Glass-Design.">
+  <meta property="og:image" content="https://lvisxvi.github.io/minecraft-host/media/hero-real.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="media/scene-aurora.webp">
+  <link rel="stylesheet" href="liquid.css">
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Person","name":"LvisXVI","url":"https://lvisxvi.github.io/","sameAs":["https://github.com/LvisXVI"],"email":"mailto:luisminecraft1x@gmail.com"}
+  </script>
+  <style>
+    body { --scene: url("media/scene-aurora.webp"); --accent: #7ff0e4; --accent-2: #a98bff; --accent-ink: #04121a; }
+    .contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .link-box { display: grid; gap: 14px; padding: 26px; border-radius: 26px; color: inherit; text-decoration: none; text-align: left; font: inherit; cursor: pointer; border: 0; width: 100%; transition: transform .5s var(--ease-spring), box-shadow .5s var(--ease-out); }
+    .link-box:hover, .link-box:focus-visible { transform: translateY(-4px); box-shadow: var(--shadow), 0 0 0 1px rgba(127, 240, 228, .35); }
+    .link-box .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(180deg, rgba(127,240,228,.35), rgba(169,139,255,.2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); font-size: 20px; }
+    .link-box strong { font-family: var(--font-display); font-size: 22px; color: var(--ink); }
+    .link-box small { color: var(--ink-3); font-size: 14px; word-break: break-all; }
+    .link-box em { font-style: normal; font-size: 13px; color: var(--accent); letter-spacing: .02em; }
+    .projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .project { display: grid; gap: 12px; padding: 24px; border-radius: 26px; color: inherit; text-decoration: none; transition: transform .5s var(--ease-spring), box-shadow .5s var(--ease-out); }
+    .project:hover, .project:focus-visible { transform: translateY(-4px); box-shadow: var(--shadow), 0 0 0 1px rgba(169, 139, 255, .35); }
+    .project img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); }
+    .project h3 { margin: 0; font-family: var(--font-display); font-size: 22px; color: var(--ink); }
+    .project p { margin: 0; color: var(--ink-2); font-size: 15px; }
+    .project span.go { color: var(--accent); font-size: 14px; font-weight: 600; }
+    .copied { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); padding: 10px 18px; border-radius: 999px; background: var(--glass-hi); color: var(--ink); box-shadow: var(--shadow); opacity: 0; transition: opacity .3s var(--ease-out); pointer-events: none; }
+    .copied.show { opacity: 1; }
+    @media (max-width: 900px) {
+      .contact, .projects { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt</a>
+  <nav class="lg-nav glass" aria-label="Hauptmenü">
+    <a class="brand" href="#top"><span class="block-mark" aria-hidden="true"></span><span>LvisXVI</span></a>
+    <div class="nav-links">
+      <a href="#projects">Projekte</a><a href="#contact">Kontakt</a>
+    </div>
+    <a class="btn primary small nav-cta" href="https://github.com/LvisXVI" rel="me">GitHub</a>
+    <button class="menu-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main id="main">
+    <header class="hero wrap" id="top">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow" data-hero style="--d:0">Minecraft Java · Windows</span>
+          <h1 data-hero style="--d:1;margin-top:22px">Hi, ich bin <span class="grad">LvisXVI.</span></h1>
+          <p class="lead" data-hero style="--d:2">Ich baue Minecraft-Tools, die lokal auf deinem PC laufen: Server verwalten, Modpacks planen und eigene Mods bauen. Alles im gleichen Liquid-Glass-Design.</p>
+          <div class="actions" data-hero style="--d:3">
+            <a class="btn primary" href="#projects">Projekte ansehen</a>
+            <a class="btn" href="#contact">Kontakt</a>
+          </div>
+        </div>
+        <div class="hero-visual" data-hero style="--d:2">
+          <div class="device glass"><img src="media/scene-aurora.webp" width="1600" height="900" alt="Nachtlandschaft im Minecraft-Stil über einem See"></div>
+          <div class="float glass f1"><span class="ico">⬢</span><div>3 Projekte<small>Host · Modspire · Mod Studio</small></div></div>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"></div>
+    </header>
+
+    <section class="section wrap" id="contact">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Kontakt</span>
+        <h2>Schreib <span class="grad">mir.</span></h2>
+        <p>Klick auf eine Karte: E-Mail öffnet dein Mailprogramm, der Discord-Name wird kopiert, GitHub öffnet sich in einem neuen Tab.</p>
+      </div>
+      <div class="contact">
+        <button class="link-box card glass tint" type="button" data-copy="lvis8311" data-reveal>
+          <span class="ico">💬</span>
+          <strong>Discord</strong>
+          <small>lvis8311</small>
+          <em>Klicken zum Kopieren</em>
+        </button>
+        <a class="link-box card glass tint" href="mailto:luisminecraft1x@gmail.com" data-reveal>
+          <span class="ico">✉️</span>
+          <strong>E-Mail</strong>
+          <small>luisminecraft1x@gmail.com</small>
+          <em>Mail schreiben</em>
+        </a>
+        <a class="link-box card glass tint" href="https://github.com/LvisXVI" target="_blank" rel="noopener me" data-reveal>
+          <span class="ico">🐙</span>
+          <strong>GitHub</strong>
+          <small>github.com/LvisXVI</small>
+          <em>Hauptprofil öffnen</em>
+        </a>
+      </div>
+    </section>
+
+    <section class="section wrap" id="projects">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Projekte</span>
+        <h2>Meine <span class="grad">Minecraft-Tools.</span></h2>
+        <p>Alle Projekte laufen lokal auf deinem Windows-PC. Die Seiten dazu liegen auf GitHub Pages.</p>
+      </div>
+      <div class="projects">
+        <a class="project card glass tint" href="minecraft-host/" data-reveal>
+          <img src="https://lvisxvi.github.io/minecraft-host/media/hero-real.jpg" width="1620" height="1095" loading="lazy" alt="Minecraft Host mit dem Server Fabric 26.2 Smoke">
+          <h3>Minecraft Host</h3>
+          <p>Lokaler Servermanager für Minecraft Java: Modrinth-Packs importieren, Java automatisch finden, Freunde über Radmin VPN oder playit einladen.</p>
+          <span class="go">Zur Seite →</span>
+        </a>
+        <a class="project card glass tint" href="modspire/" data-reveal>
+          <img src="https://lvisxvi.github.io/modspire/media/hero-real.jpg" width="1620" height="907" loading="lazy" alt="Modspire Pack Lab mit Kompatibilitäts-Check">
+          <h3>Modspire</h3>
+          <p>Studio für Modpacks: Modrinth durchsuchen, Varianten vergleichen, Snapshots speichern und eine installierbare .mrpack exportieren.</p>
+          <span class="go">Zur Seite →</span>
+        </a>
+        <a class="project card glass tint" href="minecraft-mod-studio/" data-reveal>
+          <img src="https://lvisxvi.github.io/minecraft-mod-studio/media/hero-real.jpg" width="1620" height="1058" loading="lazy" alt="Mod Studio Build-Ansicht mit Mod-Assistent">
+          <h3>Mod Studio</h3>
+          <p>Lokale Werkbank für eigene Minecraft-Mods: Idee beschreiben, zeichnen und bearbeiten, Java-Quellcode aus dem Projekt. KI ist optional.</p>
+          <span class="go">Zur Seite →</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div>
+        <a class="brand" href="#top"><span class="block-mark" aria-hidden="true"></span><span>LvisXVI</span></a>
+        <p>Unabhängiges Hobby-Projekt. Nicht mit Mojang oder Microsoft verbunden. Gebündelte Drittsoftware steht unter ihren eigenen Lizenzen.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://github.com/LvisXVI">GitHub</a>
+        <a href="mailto:luisminecraft1x@gmail.com">E-Mail</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="copied" id="copied" role="status" aria-live="polite">Discord-Name kopiert</div>
+  <script src="liquid.js" defer></script>
+  <script>
+    (function () {
+      var box = document.getElementById('copied');
+      document.querySelectorAll('[data-copy]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var value = btn.getAttribute('data-copy');
+          var done = function () {
+            box.textContent = value + ' kopiert';
+            box.classList.add('show');
+            clearTimeout(box._t);
+            box._t = setTimeout(function () { box.classList.remove('show'); }, 1800);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(value).then(done, done);
+          } else {
+            done();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
