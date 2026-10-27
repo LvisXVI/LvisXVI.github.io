@@ -113,6 +113,13 @@
       *, *::before, *::after { animation: none !important; transition: none !important; }
       h1 .word { opacity: 1; transform: none; }
     }
+    .demo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .demo-card { display: grid; gap: 10px; padding: 18px; align-content: start; }
+    .demo-card h3 { margin: 0; font-family: var(--font-display); font-size: 22px; color: var(--ink); }
+    .demo-card p { margin: 0; font-size: 14px; color: var(--ink-3); }
+    .demo-card img { display: block; width: 100%; height: auto; border-radius: 16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); transition: transform .6s var(--ease-spring); }
+    .demo-card:hover img { transform: scale(1.02); }
+    @media (max-width: 900px) { .demo-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -199,11 +206,30 @@
             <img class="on" id="img-a" alt="">
             <img id="img-b" alt="">
           </div>
-          <div class="mode" style="margin-top:14px" role="group" aria-label="Ansicht">
-            <button type="button" data-mode="overview" aria-pressed="true">Übersicht</button>
-            <button type="button" data-mode="demo" aria-pressed="false">Demo</button>
-          </div>
         </div>
+      </div>
+    </section>
+  <section class="section wrap" id="demo">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Live-Demo</span>
+        <h2>So sehen die <span class="grad">Apps aus.</span></h2>
+      </div>
+      <div class="demo-grid">
+        <article class="card glass tint demo-card" data-reveal>
+          <h3>Minecraft Host</h3>
+          <p>Server-Übersicht und Dialog „Server erstellen“.</p>
+          <img src="media/minecraft-host-live-demo.webp" width="960" height="600" loading="lazy" alt="Live-Demo Minecraft Host: Server-Übersicht, Design-Wechsel und Dialog Server erstellen">
+        </article>
+        <article class="card glass tint demo-card" data-reveal>
+          <h3>Modspire</h3>
+          <p>Übersicht, Pack-Assistent, Mod-Katalog und Pack Lab.</p>
+          <img src="media/modspire-live-demo.webp" width="960" height="600" loading="lazy" alt="Live-Demo Modspire: Übersicht, Pack-Assistent, Mod-Katalog und Pack Lab">
+        </article>
+        <article class="card glass tint demo-card" data-reveal>
+          <h3>Mod Studio</h3>
+          <p>Projekt öffnen, Editor und Mod-Bauen-Ansicht.</p>
+          <img src="media/mod-studio-live-demo.webp" width="960" height="600" loading="lazy" alt="Live-Demo Mod Studio: Projekt, Editor und Mod-Bauen-Ansicht">
+        </article>
       </div>
     </section>
   </main>
@@ -242,11 +268,11 @@
 
       // Projects: tabs + overview/demo crossfade
       var P = {
-        host: { name: 'Minecraft Host', ov: 'media/minecraft-host-overview.jpg', demo: 'media/minecraft-host-demo.webp', page: 'minecraft-host/',
+        host: { name: 'Minecraft Host', ov: 'media/minecraft-host-overview.jpg', demo: 'media/minecraft-host-live-demo.webp', page: 'minecraft-host/',
           text: 'Lokaler Servermanager für Minecraft Java: Modrinth-Packs importieren, Java automatisch finden, Freunde über Radmin VPN oder playit einladen.', chips: ['Modrinth', 'Java auto', 'Radmin VPN'] },
-        modspire: { name: 'Modspire', ov: 'media/modspire-overview.jpg', demo: 'media/modspire-demo.webp', page: 'modspire/',
+        modspire: { name: 'Modspire', ov: 'media/modspire-overview.jpg', demo: 'media/modspire-live-demo.webp', page: 'modspire/',
           text: 'Studio für Modpacks: Modrinth durchsuchen, Varianten vergleichen, Snapshots speichern und eine installierbare .mrpack exportieren.', chips: ['Modrinth', '.mrpack', 'Pack Lab'] },
-        studio: { name: 'Mod Studio', ov: 'media/mod-studio-overview.jpg', demo: 'media/mod-studio-demo.webp', page: 'minecraft-mod-studio/',
+        studio: { name: 'Mod Studio', ov: 'media/mod-studio-overview.jpg', demo: 'media/mod-studio-live-demo.webp', page: 'minecraft-mod-studio/',
           text: 'Lokale Werkbank für eigene Minecraft-Mods: Idee beschreiben, zeichnen und bearbeiten, Java-Quellcode aus dem Projekt. KI ist optional.', chips: ['Textur', '3D-Vorschau', 'Assistent'] }
       };
       var mode = 'overview', current = 'host';
