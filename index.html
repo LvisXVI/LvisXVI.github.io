@@ -11,7 +11,7 @@
   <meta property="og:url" content="https://lvisxvi.github.io/">
   <meta property="og:title" content="LvisXVI — Minecraft-Tools">
   <meta property="og:description" content="Minecraft Host, Modspire und Mod Studio. Lokal auf deinem PC, im Liquid-Glass-Design.">
-  <meta property="og:image" content="https://lvisxvi.github.io/minecraft-host/media/hero-real.jpg">
+  <meta property="og:image" content="https://lvisxvi.github.io/minecraft-host/media/minecraft-host-overview.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,36 +22,110 @@
     {"@context":"https://schema.org","@type":"Person","name":"LvisXVI","url":"https://lvisxvi.github.io/","sameAs":["https://github.com/LvisXVI"],"email":"mailto:luisminecraft1x@gmail.com"}
   </script>
   <style>
-    body { --scene: url("media/scene-aurora.webp"); --accent: #7ff0e4; --accent-2: #a98bff; --accent-ink: #04121a; }
+    body { --scene: url("media/scene-aurora.webp"); --accent: #7ff0e4; --accent-2: #a98bff; --accent-ink: #04121a; overflow-x: hidden; }
+
+    /* ---------- ambient background ---------- */
+    .ambient { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+    .ambient i { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: drift 22s ease-in-out infinite alternate; }
+    .ambient i:nth-child(1) { width: 46vmax; height: 46vmax; background: var(--accent); left: -12vmax; top: -10vmax; }
+    .ambient i:nth-child(2) { width: 40vmax; height: 40vmax; background: var(--accent-2); right: -14vmax; top: 30vh; animation-duration: 28s; animation-delay: -6s; }
+    .ambient i:nth-child(3) { width: 30vmax; height: 30vmax; background: #3d7bff; left: 30vw; bottom: -14vmax; animation-duration: 34s; animation-delay: -12s; }
+    .pointer-glow { position: fixed; width: 420px; height: 420px; left: 0; top: 0; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, rgba(127,240,228,.16), transparent 60%); transform: translate(calc(var(--mx, -999px) - 210px), calc(var(--my, -999px) - 210px)); transition: transform .25s var(--ease-out); z-index: -1; }
+    @keyframes drift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(4vw,-3vh,0) scale(1.12); } }
+
+    /* ---------- hero ---------- */
+    .hero { min-height: calc(100vh - 110px); padding-top: 36px; padding-bottom: 24px; display: flex; flex-direction: column; justify-content: center; }
+    .hero .hero-grid { align-items: center; }
+    h1 .word { display: inline-block; opacity: 0; transform: translateY(40px) rotate(4deg); animation: wordIn .9s var(--ease-out) forwards; animation-delay: calc(var(--i) * 90ms + 150ms); }
+    @keyframes wordIn { to { opacity: 1; transform: none; } }
+    .lead, .actions, .eyebrow { animation: fadeUp .9s var(--ease-out) both; }
+    .lead { animation-delay: .55s; } .actions { animation-delay: .7s; } .eyebrow { animation-delay: .05s; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    .btn { position: relative; overflow: hidden; }
+    .btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.45) 50%, transparent 65%); transform: translateX(-120%); }
+    .btn:hover::after { transform: translateX(120%); transition: transform .8s var(--ease-out); }
+    .hero-visual { position: relative; animation: fadeUp 1.1s var(--ease-out) .35s both; }
+    .hero-visual .device { transition: transform .6s var(--ease-out); }
+    .hero-visual:hover .device { transform: perspective(1200px) rotateY(-4deg) rotateX(2deg); }
+    .hero-visual img { display: block; width: 100%; height: auto; border-radius: 22px; }
+    .float.f1 { animation: bob 5s ease-in-out infinite; }
+    .float.f2 { position: absolute; right: -8px; bottom: -20px; animation: bob 6s ease-in-out -2s infinite; }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .scroll-cue { display: none; }
+
+    /* ---------- marquee ---------- */
+    .marquee { overflow: hidden; margin: 6px 0 40px; padding: 14px 0; border-block: 1px solid var(--line-soft); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+    .marquee-track { display: flex; gap: 48px; width: max-content; animation: marq 28s linear infinite; font-family: var(--font-display); font-size: 22px; color: var(--ink-3); white-space: nowrap; }
+    .marquee-track span::after { content: "✦"; margin-left: 48px; color: var(--accent); opacity: .7; }
+    @keyframes marq { to { transform: translateX(-50%); } }
+
+    /* ---------- contact ---------- */
+    .section { padding: 24px 0; }
+    .section-head { margin-bottom: 22px; }
+    .section-head h2 { margin: 10px 0 6px; }
     .contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .link-box { display: grid; gap: 14px; padding: 26px; border-radius: 26px; color: inherit; text-decoration: none; text-align: left; font: inherit; cursor: pointer; border: 0; width: 100%; transition: transform .5s var(--ease-spring), box-shadow .5s var(--ease-out); }
-    .link-box:hover, .link-box:focus-visible { transform: translateY(-4px); box-shadow: var(--shadow), 0 0 0 1px rgba(127, 240, 228, .35); }
-    .link-box .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(180deg, rgba(127,240,228,.35), rgba(169,139,255,.2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); font-size: 20px; }
-    .link-box strong { font-family: var(--font-display); font-size: 22px; color: var(--ink); }
-    .link-box small { color: var(--ink-3); font-size: 14px; word-break: break-all; }
-    .link-box em { font-style: normal; font-size: 13px; color: var(--accent); letter-spacing: .02em; }
-    .projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .project { display: grid; gap: 12px; padding: 24px; border-radius: 26px; color: inherit; text-decoration: none; transition: transform .5s var(--ease-spring), box-shadow .5s var(--ease-out); }
-    .project:hover, .project:focus-visible { transform: translateY(-4px); box-shadow: var(--shadow), 0 0 0 1px rgba(169, 139, 255, .35); }
-    .project img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); }
-    .project h3 { margin: 0; font-family: var(--font-display); font-size: 22px; color: var(--ink); }
-    .project p { margin: 0; color: var(--ink-2); font-size: 15px; }
-    .project span.go { color: var(--accent); font-size: 14px; font-weight: 600; }
-    .copied { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); padding: 10px 18px; border-radius: 999px; background: var(--glass-hi); color: var(--ink); box-shadow: var(--shadow); opacity: 0; transition: opacity .3s var(--ease-out); pointer-events: none; }
-    .copied.show { opacity: 1; }
+    .cta { position: relative; display: grid; gap: 10px; padding: 24px; border-radius: 26px; color: inherit; text-decoration: none; text-align: left; font: inherit; cursor: pointer; border: 0; width: 100%; transform-style: preserve-3d; transition: transform .5s var(--ease-spring), box-shadow .5s var(--ease-out); }
+    .cta:hover, .cta:focus-visible { box-shadow: var(--shadow), 0 0 0 1px rgba(127,240,228,.4); }
+    .cta .ico { width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; font-size: 21px; background: linear-gradient(180deg, rgba(127,240,228,.35), rgba(169,139,255,.2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); }
+    .cta strong { font-family: var(--font-display); font-size: 22px; color: var(--ink); }
+    .cta small { color: var(--ink-3); font-size: 14px; word-break: break-all; }
+    .cta .go { color: var(--accent); font-size: 14px; font-weight: 600; display: inline-flex; gap: 6px; align-items: center; }
+    .cta .go span { transition: transform .4s var(--ease-spring); }
+    .cta:hover .go span { transform: translateX(6px); }
+
+    /* ---------- projects ---------- */
+    .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .tab { padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--glass); color: var(--ink-2); font: inherit; font-weight: 600; cursor: pointer; transition: background .4s var(--ease-out), color .4s, transform .4s var(--ease-spring); }
+    .tab:hover { transform: translateY(-2px); }
+    .tab[aria-selected="true"] { background: linear-gradient(180deg, #a6f5b3, var(--accent)); color: var(--accent-ink); border-color: transparent; box-shadow: 0 8px 24px -10px var(--accent); }
+    .showcase { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 22px; padding: 22px; border-radius: 30px; align-items: center; }
+    .showcase-text { display: grid; gap: 14px; animation: fadeUp .6s var(--ease-out) both; }
+    .showcase-text h3 { margin: 0; font-family: var(--font-display); font-size: 32px; }
+    .showcase-text p { margin: 0; color: var(--ink-2); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips span { font-family: var(--font-mono); font-size: 12px; padding: 6px 10px; border-radius: 999px; background: var(--glass-hi); color: var(--ink-2); }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .mode { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--glass); border: 1px solid var(--line-soft); width: max-content; }
+    .mode button { border: 0; background: transparent; color: var(--ink-2); font: inherit; font-size: 14px; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+    .mode button[aria-pressed="true"] { background: var(--glass-hi); color: var(--ink); }
+    .stage { position: relative; aspect-ratio: 16 / 10; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.8); }
+    .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); transition: opacity .8s var(--ease-out), transform 1.6s var(--ease-out); }
+    .stage img.on { opacity: 1; transform: scale(1); }
+    .stage::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); pointer-events: none; }
+
+    /* ---------- footer ---------- */
+    .footer { padding: 28px 0 40px; }
+
+    /* ---------- toast ---------- */
+    .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 140%); padding: 12px 20px; border-radius: 999px; background: var(--glass-hi); color: var(--ink); box-shadow: var(--shadow); transition: transform .5s var(--ease-spring); z-index: 5; max-width: calc(100vw - 32px); text-align: center; }
+    .toast.show { transform: translate(-50%, 0); }
+
+    /* ---------- reveal stagger ---------- */
+    [data-reveal] { transition-duration: 1.1s; }
+
     @media (max-width: 900px) {
-      .contact, .projects { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; }
+      .showcase { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .float.f2 { right: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      h1 .word { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
+  <div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="pointer-glow" aria-hidden="true"></div>
+
   <a class="skip" href="#main">Zum Inhalt</a>
   <nav class="lg-nav glass" aria-label="Hauptmenü">
     <a class="brand" href="#top"><span class="block-mark" aria-hidden="true"></span><span>LvisXVI</span></a>
     <div class="nav-links">
       <a href="#projects">Projekte</a><a href="#contact">Kontakt</a>
     </div>
-    <a class="btn primary small nav-cta" href="https://github.com/LvisXVI" rel="me">GitHub</a>
+    <a class="btn primary small nav-cta" href="https://github.com/LvisXVI" target="_blank" rel="noopener me">GitHub</a>
     <button class="menu-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
 
@@ -59,46 +133,51 @@
     <header class="hero wrap" id="top">
       <div class="hero-grid">
         <div>
-          <span class="eyebrow" data-hero style="--d:0">Minecraft Java · Windows</span>
-          <h1 data-hero style="--d:1;margin-top:22px">Hi, ich bin <span class="grad">LvisXVI.</span></h1>
-          <p class="lead" data-hero style="--d:2">Ich baue Minecraft-Tools, die lokal auf deinem PC laufen: Server verwalten, Modpacks planen und eigene Mods bauen. Alles im gleichen Liquid-Glass-Design.</p>
-          <div class="actions" data-hero style="--d:3">
+          <span class="eyebrow">Minecraft Java · Windows</span>
+          <h1 style="margin-top:22px"><span class="word" style="--i:0">Hi,</span> <span class="word" style="--i:1">ich</span> <span class="word" style="--i:2">bin</span> <span class="word grad" style="--i:3">LvisXVI.</span></h1>
+          <p class="lead">Ich baue Minecraft-Tools, die lokal auf deinem PC laufen: Server verwalten, Modpacks planen und eigene Mods bauen.</p>
+          <div class="actions" style="margin-top:28px">
             <a class="btn primary" href="#projects">Projekte ansehen</a>
             <a class="btn" href="#contact">Kontakt</a>
           </div>
         </div>
-        <div class="hero-visual" data-hero style="--d:2">
-          <div class="device glass"><img src="media/scene-aurora.webp" width="1600" height="900" alt="Nachtlandschaft im Minecraft-Stil über einem See"></div>
-          <div class="float glass f1"><span class="ico">⬢</span><div>3 Projekte<small>Host · Modspire · Mod Studio</small></div></div>
+        <div class="hero-visual">
+          <div class="device glass"><img src="media/minecraft-host-overview.jpg" width="1280" height="800" alt="Minecraft Host im Liquid-Glass-Design: Server Fabric 26.1.2 mit Live-Daten"></div>
+          <div class="float glass f2"><span class="ico">⬢</span><div>3 Projekte<small>Host · Modspire · Mod Studio</small></div></div>
         </div>
       </div>
-      <div class="scroll-cue" aria-hidden="true"></div>
     </header>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Minecraft Host</span><span>Modspire</span><span>Mod Studio</span><span>Modrinth</span><span>Fabric</span><span>Liquid Glass</span>
+        <span>Minecraft Host</span><span>Modspire</span><span>Mod Studio</span><span>Modrinth</span><span>Fabric</span><span>Liquid Glass</span>
+      </div>
+    </div>
 
     <section class="section wrap" id="contact">
       <div class="section-head" data-reveal>
         <span class="eyebrow">Kontakt</span>
         <h2>Schreib <span class="grad">mir.</span></h2>
-        <p>Klick auf eine Karte: E-Mail öffnet dein Mailprogramm, der Discord-Name wird kopiert, GitHub öffnet sich in einem neuen Tab.</p>
       </div>
       <div class="contact">
-        <button class="link-box card glass tint" type="button" data-copy="lvis8311" data-reveal>
+        <button class="cta card glass tint tilt" type="button" id="discord-btn" data-reveal>
           <span class="ico">💬</span>
           <strong>Discord</strong>
           <small>lvis8311</small>
-          <em>Klicken zum Kopieren</em>
+          <span class="go">Discord öffnen <span>→</span></span>
         </button>
-        <a class="link-box card glass tint" href="mailto:luisminecraft1x@gmail.com" data-reveal>
+        <a class="cta card glass tint tilt" href="mailto:luisminecraft1x@gmail.com" data-reveal>
           <span class="ico">✉️</span>
           <strong>E-Mail</strong>
           <small>luisminecraft1x@gmail.com</small>
-          <em>Mail schreiben</em>
+          <span class="go">Mail schreiben <span>→</span></span>
         </a>
-        <a class="link-box card glass tint" href="https://github.com/LvisXVI" target="_blank" rel="noopener me" data-reveal>
+        <a class="cta card glass tint tilt" href="https://github.com/LvisXVI" target="_blank" rel="noopener me" data-reveal>
           <span class="ico">🐙</span>
           <strong>GitHub</strong>
           <small>github.com/LvisXVI</small>
-          <em>Hauptprofil öffnen</em>
+          <span class="go">Profil öffnen <span>→</span></span>
         </a>
       </div>
     </section>
@@ -107,86 +186,123 @@
       <div class="section-head" data-reveal>
         <span class="eyebrow">Projekte</span>
         <h2>Meine <span class="grad">Minecraft-Tools.</span></h2>
-        <p>Alle Projekte laufen lokal auf deinem Windows-PC. Die Seiten dazu liegen auf GitHub Pages.</p>
       </div>
-      <div class="projects">
-        <a class="project card glass tint" href="minecraft-host/" data-reveal>
-          <img src="media/minecraft-host-overview.jpg" width="1280" height="800" loading="lazy" alt="Minecraft Host im Liquid-Glass-Design: Server Fabric 26.1.2 mit Live-Daten">
-          <h3>Minecraft Host</h3>
-          <p>Lokaler Servermanager für Minecraft Java: Modrinth-Packs importieren, Java automatisch finden, Freunde über Radmin VPN oder playit einladen.</p>
-          <span class="go">Zur Seite →</span>
-        </a>
-        <a class="project card glass tint" href="modspire/" data-reveal>
-          <img src="media/modspire-overview.jpg" width="1280" height="800" loading="lazy" alt="Modspire im Liquid-Glass-Design: Übersicht des Modpacks Neues Abenteuer">
-          <h3>Modspire</h3>
-          <p>Studio für Modpacks: Modrinth durchsuchen, Varianten vergleichen, Snapshots speichern und eine installierbare .mrpack exportieren.</p>
-          <span class="go">Zur Seite →</span>
-        </a>
-        <a class="project card glass tint" href="minecraft-mod-studio/" data-reveal>
-          <img src="media/mod-studio-overview.jpg" width="1280" height="800" loading="lazy" alt="Mod Studio im Glass-Design: Mod-Editor mit Textur, 3D-Vorschau und Mod-Assistent">
-          <h3>Mod Studio</h3>
-          <p>Lokale Werkbank für eigene Minecraft-Mods: Idee beschreiben, zeichnen und bearbeiten, Java-Quellcode aus dem Projekt. KI ist optional.</p>
-          <span class="go">Zur Seite →</span>
-        </a>
+      <div class="tabs" role="tablist" aria-label="Projekte">
+        <button class="tab" role="tab" aria-selected="true" data-p="host">Minecraft Host</button>
+        <button class="tab" role="tab" aria-selected="false" data-p="modspire">Modspire</button>
+        <button class="tab" role="tab" aria-selected="false" data-p="studio">Mod Studio</button>
       </div>
-    </section>
-
-    <section class="section wrap" id="demo">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Demo</span>
-        <h2>Modspire <span class="grad">in Bewegung.</span></h2>
-        <p>Übersicht, Pack-Assistent, Mod-Katalog und Pack Lab, aufgenommen aus der echten App im Liquid-Glass-Design.</p>
+      <div class="showcase glass tint" data-reveal>
+        <div class="showcase-text" id="p-text"></div>
+        <div>
+          <div class="stage" id="stage">
+            <img class="on" id="img-a" alt="">
+            <img id="img-b" alt="">
+          </div>
+          <div class="mode" style="margin-top:14px" role="group" aria-label="Ansicht">
+            <button type="button" data-mode="overview" aria-pressed="true">Übersicht</button>
+            <button type="button" data-mode="demo" aria-pressed="false">Demo</button>
+          </div>
+        </div>
       </div>
-      <figure class="card glass tint" data-reveal style="margin:0;padding:14px">
-        <img src="media/modspire-demo.webp" width="1280" height="800" loading="lazy" alt="Animierte Demo: Modspire wechselt zwischen Übersicht, Pack-Assistent, Mod-Katalog und Pack Lab" style="display:block;width:100%;height:auto;border-radius:18px">
-        <figcaption class="muted" style="padding:12px 6px 0">Demo-Modus ohne Anmeldung. Alle Inhalte sind Beispieldaten.</figcaption>
-      </figure>
-      <figure class="card glass tint" data-reveal style="margin:0;padding:14px;margin-top:24px">
-        <img src="media/minecraft-host-demo.webp" width="1280" height="800" loading="lazy" alt="Animierte Demo: Minecraft Host mit Server-Übersicht und Dialog Server erstellen" style="display:block;width:100%;height:auto;border-radius:18px">
-        <figcaption class="muted" style="padding:12px 6px 0">Minecraft Host: Server-Übersicht und Dialog „Server erstellen“. Adressen sind unkenntlich gemacht.</figcaption>
-      </figure>
-      <figure class="card glass tint" data-reveal style="margin:0;padding:14px;margin-top:24px">
-        <img src="media/mod-studio-demo.webp" width="1280" height="800" loading="lazy" alt="Animierte Demo: Mod Studio mit Projektstart und Mod-Editor" style="display:block;width:100%;height:auto;border-radius:18px">
-        <figcaption class="muted" style="padding:12px 6px 0">Mod Studio: Startseite und Mod-Editor mit Textur, 3D-Vorschau und Assistent.</figcaption>
-      </figure>
-
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div>
-        <a class="brand" href="#top"><span class="block-mark" aria-hidden="true"></span><span>LvisXVI</span></a>
-        <p>Unabhängiges Hobby-Projekt. Nicht mit Mojang oder Microsoft verbunden. Gebündelte Drittsoftware steht unter ihren eigenen Lizenzen.</p>
-      </div>
-      <nav aria-label="Footer">
-        <a href="https://github.com/LvisXVI">GitHub</a>
+  <footer class="footer wrap">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <a class="brand" href="#top"><span class="block-mark" aria-hidden="true"></span><span>LvisXVI</span></a>
+      <nav aria-label="Footer" class="row">
+        <a href="https://github.com/LvisXVI" target="_blank" rel="noopener">GitHub</a>
         <a href="mailto:luisminecraft1x@gmail.com">E-Mail</a>
       </nav>
     </div>
+    <p class="muted" style="font-size:14px;margin:16px 0 0">Unabhängiges Hobby-Projekt. Nicht mit Mojang oder Microsoft verbunden. Gebündelte Drittsoftware steht unter ihren eigenen Lizenzen.</p>
   </footer>
 
-  <div class="copied" id="copied" role="status" aria-live="polite">Discord-Name kopiert</div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="liquid.js" defer></script>
   <script>
     (function () {
-      var box = document.getElementById('copied');
-      document.querySelectorAll('[data-copy]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var value = btn.getAttribute('data-copy');
-          var done = function () {
-            box.textContent = value + ' kopiert';
-            box.classList.add('show');
-            clearTimeout(box._t);
-            box._t = setTimeout(function () { box.classList.remove('show'); }, 1800);
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(value).then(done, done);
-          } else {
-            done();
-          }
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var toast = document.getElementById('toast');
+      var toastT;
+      function say(msg) {
+        toast.textContent = msg; toast.classList.add('show');
+        clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('show'); }, 2600);
+      }
+
+      // Discord: one click copies the handle and opens Discord
+      document.getElementById('discord-btn').addEventListener('click', function () {
+        var handle = 'lvis8311';
+        var open = function () { window.open('https://discord.com/app', '_blank', 'noopener'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(handle).then(function () { say('„' + handle + '“ kopiert – in Discord suchen'); open(); }, open);
+        } else { open(); }
+      });
+
+      // Projects: tabs + overview/demo crossfade
+      var P = {
+        host: { name: 'Minecraft Host', ov: 'media/minecraft-host-overview.jpg', demo: 'media/minecraft-host-demo.webp', page: 'minecraft-host/',
+          text: 'Lokaler Servermanager für Minecraft Java: Modrinth-Packs importieren, Java automatisch finden, Freunde über Radmin VPN oder playit einladen.', chips: ['Modrinth', 'Java auto', 'Radmin VPN'] },
+        modspire: { name: 'Modspire', ov: 'media/modspire-overview.jpg', demo: 'media/modspire-demo.webp', page: 'modspire/',
+          text: 'Studio für Modpacks: Modrinth durchsuchen, Varianten vergleichen, Snapshots speichern und eine installierbare .mrpack exportieren.', chips: ['Modrinth', '.mrpack', 'Pack Lab'] },
+        studio: { name: 'Mod Studio', ov: 'media/mod-studio-overview.jpg', demo: 'media/mod-studio-demo.webp', page: 'minecraft-mod-studio/',
+          text: 'Lokale Werkbank für eigene Minecraft-Mods: Idee beschreiben, zeichnen und bearbeiten, Java-Quellcode aus dem Projekt. KI ist optional.', chips: ['Textur', '3D-Vorschau', 'Assistent'] }
+      };
+      var mode = 'overview', current = 'host';
+      var imgA = document.getElementById('img-a'), imgB = document.getElementById('img-b');
+      var text = document.getElementById('p-text');
+      var front = imgA;
+
+      function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+      function render(animate) {
+        var p = P[current];
+        text.innerHTML = '<h3>' + esc(p.name) + '</h3><p>' + esc(p.text) + '</p>' +
+          '<div class="chips">' + p.chips.map(function (c) { return '<span>' + esc(c) + '</span>'; }).join('') + '</div>' +
+          '<div class="row"><a class="btn primary" href="' + p.page + '">Zur Projektseite</a></div>';
+        text.style.animation = 'none'; void text.offsetWidth; text.style.animation = '';
+        var src = mode === 'demo' ? p.demo : p.ov;
+        var back = front === imgA ? imgB : imgA;
+        back.alt = p.name + (mode === 'demo' ? ' Demo' : ' Übersicht');
+        back.src = src;
+        var show = function () { back.classList.add('on'); front.classList.remove('on'); front = back; };
+        if (!animate || reduce) { back.classList.add('on'); front.classList.remove('on'); front = back; }
+        else if (back.complete) show(); else back.onload = show;
+      }
+
+      document.querySelectorAll('.tab').forEach(function (t) {
+        t.addEventListener('click', function () {
+          document.querySelectorAll('.tab').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+          t.setAttribute('aria-selected', 'true');
+          current = t.dataset.p; render(true);
         });
       });
+      document.querySelectorAll('[data-mode]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          document.querySelectorAll('[data-mode]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+          b.setAttribute('aria-pressed', 'true');
+          mode = b.dataset.mode; render(true);
+        });
+      });
+      render(false);
+
+      // Tilt on hover for the cards
+      if (!reduce) {
+        document.querySelectorAll('.tilt').forEach(function (el) {
+          el.addEventListener('pointermove', function (e) {
+            var r = el.getBoundingClientRect();
+            var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+            el.style.transform = 'perspective(900px) rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg) translateY(-4px)';
+          });
+          el.addEventListener('pointerleave', function () { el.style.transform = ''; });
+        });
+        // Pointer glow follows the cursor
+        var glow = document.querySelector('.pointer-glow');
+        window.addEventListener('pointermove', function (e) {
+          glow.style.setProperty('--mx', e.clientX + 'px'); glow.style.setProperty('--my', e.clientY + 'px');
+        }, { passive: true });
+      }
     })();
   </script>
 </body>
