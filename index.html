@@ -16,22 +16,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="media/scene-aurora.webp">
+  <link rel="preload" as="image" href="media/minecraft-skin-world-poster.webp">
   <link rel="stylesheet" href="liquid.css">
   <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"Person","name":"LvisXVI","url":"https://lvisxvi.github.io/","sameAs":["https://github.com/LvisXVI"],"email":"mailto:luisminecraft1x@gmail.com"}
   </script>
   <style>
-    body { --scene: url("media/scene-aurora.webp"); --accent: #7ff0e4; --accent-2: #a98bff; --accent-ink: #04121a; overflow-x: hidden; }
-
-    /* ---------- ambient background ---------- */
-    .ambient { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-    .ambient i { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: drift 22s ease-in-out infinite alternate; }
-    .ambient i:nth-child(1) { width: 46vmax; height: 46vmax; background: var(--accent); left: -12vmax; top: -10vmax; }
-    .ambient i:nth-child(2) { width: 40vmax; height: 40vmax; background: var(--accent-2); right: -14vmax; top: 30vh; animation-duration: 28s; animation-delay: -6s; }
-    .ambient i:nth-child(3) { width: 30vmax; height: 30vmax; background: #3d7bff; left: 30vw; bottom: -14vmax; animation-duration: 34s; animation-delay: -12s; }
-    .pointer-glow { position: fixed; width: 420px; height: 420px; left: 0; top: 0; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, rgba(127,240,228,.16), transparent 60%); transform: translate(calc(var(--mx, -999px) - 210px), calc(var(--my, -999px) - 210px)); transition: transform .25s var(--ease-out); z-index: -1; }
-    @keyframes drift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(4vw,-3vh,0) scale(1.12); } }
+    body { --scene: url("media/minecraft-skin-world-poster.webp"); --accent: #7ff0e4; --accent-2: #a98bff; --accent-ink: #04121a; overflow-x: hidden; }
 
     /* ---------- hero ---------- */
     .hero { min-height: calc(100vh - 110px); padding-top: 36px; padding-bottom: 24px; display: flex; flex-direction: column; justify-content: center; }
@@ -94,7 +85,7 @@
     .stage::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); pointer-events: none; }
 
     /* ---------- footer ---------- */
-    .footer { padding: 28px 0 40px; }
+    .footer { padding: 28px 0 120px; }
 
     /* ---------- toast ---------- */
     .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 140%); padding: 12px 20px; border-radius: 999px; background: var(--glass-hi); color: var(--ink); box-shadow: var(--shadow); transition: transform .5s var(--ease-spring); z-index: 5; max-width: calc(100vw - 32px); text-align: center; }
@@ -123,8 +114,7 @@
   </style>
 </head>
 <body>
-  <div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="pointer-glow" aria-hidden="true"></div>
+  <div class="site-scene" aria-hidden="true"><video class="site-scene__video" autoplay muted loop playsinline preload="metadata" poster="media/minecraft-skin-world-poster.webp"><source src="media/minecraft-skin-world-loop.mp4" type="video/mp4"></video></div>
 
   <a class="skip" href="#main">Zum Inhalt</a>
   <nav class="lg-nav glass" aria-label="Hauptmenü">
@@ -246,6 +236,7 @@
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="music-player.js" defer></script>
   <script src="liquid.js" defer></script>
   <script>
     (function () {
@@ -323,11 +314,6 @@
           });
           el.addEventListener('pointerleave', function () { el.style.transform = ''; });
         });
-        // Pointer glow follows the cursor
-        var glow = document.querySelector('.pointer-glow');
-        window.addEventListener('pointermove', function (e) {
-          glow.style.setProperty('--mx', e.clientX + 'px'); glow.style.setProperty('--my', e.clientY + 'px');
-        }, { passive: true });
       }
     })();
   </script>
