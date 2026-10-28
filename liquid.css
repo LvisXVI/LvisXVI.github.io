@@ -51,7 +51,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Animated Minecraft world behind the portfolio ---------- */
 .site-scene { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; background: #050913; }
 .site-scene__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
-.site-scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4,8,20,.55), rgba(4,8,20,.18) 60%, rgba(4,8,20,.34)), linear-gradient(180deg, rgba(4,8,20,.12), rgba(4,8,20,.5)); }
+.site-scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4,8,20,.45), rgba(4,8,20,.1) 60%, rgba(4,8,20,.2)), linear-gradient(180deg, rgba(4,8,20,.06), rgba(4,8,20,.3)); }
 
 /* ---------- Scene: the world behind the glass ---------- */
 .lg-scene { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
@@ -64,8 +64,8 @@ button { font: inherit; color: inherit; }
 .lg-scene::after {
   content: ""; position: absolute; inset: 0;
   background:
-    radial-gradient(120% 80% at 50% 0%, transparent 0 30%, rgba(4, 8, 20, .55) 70%),
-    linear-gradient(180deg, rgba(5, 9, 19, .25) 0%, rgba(5, 9, 19, .55) 45%, rgba(5, 9, 19, .9) 100%);
+    radial-gradient(120% 80% at 50% 0%, transparent 0 30%, rgba(4, 8, 20, .3) 70%),
+    linear-gradient(180deg, rgba(5, 9, 19, .12) 0%, rgba(5, 9, 19, .28) 45%, rgba(5, 9, 19, .6) 100%);
 }
 .lg-orb { position: absolute; width: 46vmax; aspect-ratio: 1; border-radius: 50%; filter: blur(70px); opacity: .32; mix-blend-mode: screen; animation: orb 26s var(--ease-out) infinite alternate; }
 .lg-orb.a { background: var(--accent); left: -12vmax; top: -10vmax; }
