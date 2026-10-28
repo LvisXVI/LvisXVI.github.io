@@ -24,6 +24,13 @@ uniform vec2 uImage;
 uniform float uScale;
 uniform vec2 uOffset;
 uniform float uTime;
+uniform float uAurora;
+uniform float uWater;
+uniform float uGlow;
+uniform float uStars;
+uniform float uMist;
+uniform float uFall;
+uniform float uCape;
 
 float hash(vec2 cell) { return fract(sin(dot(cell, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -37,11 +44,15 @@ void main() {
   // lake: ripples travel across the water and shift the reflections
   float ripple = sin(p.y * 0.11 + uTime * 1.3 + sin(p.x * 0.02 + uTime * 0.6) * 1.5)
                + 0.5 * sin(p.x * 0.045 - uTime * 0.9 + p.y * 0.08);
-  vec2 wave = vec2(4.5 * ripple, 1.5 * sin(p.x * 0.05 + uTime * 1.1)) * ma.g;
+  vec2 wave = vec2(4.5 * ripple, 1.5 * sin(p.x * 0.05 + uTime * 1.1)) * ma.g * uWater;
 
   // aurora: the curtains sway sideways
-  vec2 sway = vec2(12.0 * sin(p.y * 0.012 + uTime * 0.9) * ma.r, 0.0);
-  vec2 q = clamp((p + wave + sway) / uImage, 0.0, 1.0);
+  vec2 sway = vec2(12.0 * sin(p.y * 0.012 + uTime * 0.9) * ma.r * uAurora, 0.0);
+
+  // cape: the flap ripples and its tip moves most
+  float tip = clamp((uv.x - 0.78) / 0.08, 0.0, 1.0);
+  vec2 flutter = mb.b * uCape * tip * vec2(8.0 * sin(p.y * 0.05 - uTime * 2.4) + 2.0 * sin(p.y * 0.11 - uTime * 3.7), 3.0 * sin(p.y * 0.07 - uTime * 2.9));
+  vec2 q = clamp((p + wave + sway + flutter) / uImage, 0.0, 1.0);
   vec3 col = texture2D(uImg, q).rgb;
 
   // aurora: light bands run through the curtains, with fine vertical rays
@@ -49,28 +60,28 @@ void main() {
   float rays = 0.6 + 0.4 * sin(p.x * 0.09 + uTime * 2.0 + sin(p.y * 0.03) * 3.0);
   float drift = 0.5 + 0.5 * sin(p.x * 0.0023 + uTime * 0.35 + p.y * 0.004);
   vec3 aurCol = mix(vec3(0.25, 1.0, 0.6), vec3(0.5, 0.35, 1.0), 0.5 + 0.5 * sin(p.x * 0.004 + uTime * 0.4));
-  col += aurCol * ma.r * (0.2 + 0.8 * curtain) * rays * (0.6 + 0.4 * drift) * 0.9;
+  col += aurCol * ma.r * (0.2 + 0.8 * curtain) * rays * (0.6 + 0.4 * drift) * 0.9 * uAurora;
 
   // glowing elements: slow breathing light
   float breath = 0.5 + 0.5 * sin(uTime * 1.4 + p.x * 0.01 + p.y * 0.007);
-  col *= 1.0 + ma.b * 0.6 * breath;
+  col *= 1.0 + ma.b * 0.6 * breath * uGlow;
 
   // stars: twinkle in small clusters
   float twinkle = 0.5 + 0.5 * sin(uTime * 2.2 + hash(floor(p / 3.0)) * 6.2832);
-  col += mb.r * twinkle * 0.9;
+  col += mb.r * twinkle * 0.9 * uStars;
 
   // mist: a soft band drifts sideways
   vec2 mistUv = clamp(uv + vec2(0.02 * sin(uTime * 0.5), 0.0), 0.0, 1.0);
   float mist = texture2D(uMaskB, mistUv).g;
-  col = mix(col, vec3(0.8, 0.84, 0.92), mist * 0.16 * (0.6 + 0.4 * sin(uTime * 0.8)));
+  col = mix(col, vec3(0.8, 0.84, 0.92), mist * 0.16 * (0.6 + 0.4 * sin(uTime * 0.8)) * uMist);
 
   // waterfalls: light runs downwards
   float flow = 0.5 + 0.5 * sin(p.y * 0.07 - uTime * 5.0 + sin(p.x * 0.3) * 2.0);
-  col += mb.b * flow * vec3(0.8, 0.9, 1.0) * 0.4;
+  col += mb.b * flow * vec3(0.8, 0.9, 1.0) * 0.4 * uFall;
 
   // lake: glints on bright water
   float bright = dot(col, vec3(0.3, 0.59, 0.11));
-  col += ma.g * pow(max(bright - 0.55, 0.0) * 2.0, 2.0) * (0.5 + 0.5 * sin(p.x * 0.13 + p.y * 0.21 - uTime * 3.0)) * 0.8;
+  col += ma.g * pow(max(bright - 0.55, 0.0) * 2.0, 2.0) * (0.5 + 0.5 * sin(p.x * 0.13 + p.y * 0.21 - uTime * 3.0)) * 0.8 * uWater;
 
   gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
 }`;
@@ -130,6 +141,13 @@ void main() {
       uScale: uniform('uScale'),
       uOffset: uniform('uOffset'),
       uTime: uniform('uTime'),
+      uAurora: uniform('uAurora'),
+      uWater: uniform('uWater'),
+      uGlow: uniform('uGlow'),
+      uStars: uniform('uStars'),
+      uMist: uniform('uMist'),
+      uFall: uniform('uFall'),
+      uCape: uniform('uCape'),
       uImg: uniform('uImg'),
       uMaskA: uniform('uMaskA'),
       uMaskB: uniform('uMaskB'),
@@ -220,6 +238,10 @@ void main() {
       gl.uniform1i(setup.uMaskA, 1);
       gl.uniform1i(setup.uMaskB, 2);
       gl.uniform2f(setup.uImage, image.naturalWidth, image.naturalHeight);
+      // data-effects lists what moves; anything not listed stays still
+      const effects = (root.dataset.effects || 'aurora,water,glow,stars,mist,falls').split(',').map((name) => name.trim());
+      const switches = { uAurora: 'aurora', uWater: 'water', uGlow: 'glow', uStars: 'stars', uMist: 'mist', uFall: 'falls', uCape: 'cape' };
+      Object.keys(switches).forEach((key) => gl.uniform1f(setup[key], effects.indexOf(switches[key]) !== -1 ? 1 : 0));
 
       let particles = [];
       let width = 0;

@@ -138,7 +138,7 @@
   </style>
 </head>
 <body>
-  <div class="site-scene living" data-living data-image="media/living/home-bg.jpg" data-mask-a="media/living/home-mask-a.png" data-mask-b="media/living/home-mask-b.png" aria-hidden="true" style="background-image: url(media/living/home-bg.jpg)"></div>
+  <div class="site-scene living" data-living data-effects="aurora,cape" data-image="media/living/home-bg.jpg" data-mask-a="media/living/home-mask-a.png" data-mask-b="media/living/home-mask-b.png" aria-hidden="true" style="background-image: url(media/living/home-bg.jpg)"></div>
 
   <a class="skip" href="#main">Zum Inhalt</a>
   <nav class="lg-nav glass" aria-label="Hauptmenü">
@@ -213,7 +213,7 @@
         studio: { name: 'Mod Studio', ov: 'media/mod-studio-overview.jpg', demo: 'media/mod-studio-live-demo.webp', page: 'minecraft-mod-studio/',
           text: 'Lokale Werkbank für eigene Minecraft-Mods: Idee beschreiben, zeichnen und bearbeiten, Java-Quellcode aus dem Projekt. KI ist optional.', chips: ['Textur', '3D-Vorschau', 'Assistent'] }
       };
-      var mode = 'overview', current = 'host';
+      var mode = 'overview', current = 'host', renderToken = 0;
       var imgA = document.getElementById('img-a'), imgB = document.getElementById('img-b');
       var text = document.getElementById('p-text');
       var front = imgA;
@@ -228,11 +228,22 @@
         text.style.animation = 'none'; void text.offsetWidth; text.style.animation = '';
         var src = mode === 'demo' ? p.demo : p.ov;
         var back = front === imgA ? imgB : imgA;
+        var token = ++renderToken;
         back.alt = p.name + (mode === 'demo' ? ' Demo' : ' Übersicht');
+        // Only the newest request may reveal its image, so quick repeated clicks cannot leave the stage empty.
+        var show = function () {
+          if (token !== renderToken || front === back) return;
+          back.classList.add('on'); front.classList.remove('on'); front = back;
+        };
+        // A missing or broken file falls back to the overview picture instead of an empty stage.
+        back.onerror = function () {
+          if (token !== renderToken || back.getAttribute('src') === p.ov) return;
+          back.onload = show; back.src = p.ov;
+        };
+        back.onload = show;
         back.src = src;
-        var show = function () { back.classList.add('on'); front.classList.remove('on'); front = back; };
         if (!animate || reduce) { back.classList.add('on'); front.classList.remove('on'); front = back; }
-        else if (back.complete) show(); else back.onload = show;
+        else if (back.complete && back.naturalWidth) show();
       }
 
       document.querySelectorAll('.tab').forEach(function (t) {
