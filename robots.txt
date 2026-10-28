@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lvisxvi.github.io/sitemap.xml
