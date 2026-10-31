@@ -1435,3 +1435,9 @@ code {
     animation: none !important;
   }
 }
+
+/* Keep the Villagers: Repurposed character visible in the portfolio card. */
+.home-page #project-villagers-repurposed .project-image img {
+  aspect-ratio: 16 / 10;
+  object-position: center;
+}
